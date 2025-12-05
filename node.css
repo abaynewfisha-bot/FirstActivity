@@ -1,0 +1,13 @@
+body{
+    background-color: rgb(32, 188, 58);
+}
+img{
+    width: 70%;
+    height: 100vh;
+    margin-top: 10px;
+    padding: 12px,0px 10px;
+    justify-content: center;
+    display: flex;
+    display: grid;
+    display: block;
+}
