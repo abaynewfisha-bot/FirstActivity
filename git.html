@@ -1,29 +1,227 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>git</title>
+    <meta name="theme-color" content="#123c35">
+    <meta name="description" content="Discover Injibara University, explore areas of study, and register your interest in learning more.">
+    <title>Injibara University | Learn, grow, contribute</title>
+    <link rel="stylesheet" href="node.css">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-   <h1>Welcoe to Injibara University </h1> 
-    <img src="/images/IMG_20230416_131409_370.jpg" alt="">
-   <form>
-   <form action="rejistered">
-    <label for="">
-       Name <input type="text" name="name" required>
-    </label><br>
-    <label for="">
-        Email <input type="email" name="email" value="" required>
-    </label><br>
-    <label for="">
-        
-    </label>
-   </form>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="announcement">
+        <div class="container announcement-inner">
+            <span><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Prospective student? Send an inquiry to learn more.</span>
+            <a href="#inquiry">Register your interest <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+    </div>
 
-   </form>
-   <script src="javascript/async.js">
-    
-   </script>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="#home" aria-label="Injibara University home">
+                <span class="brand-mark" aria-hidden="true">IU</span>
+                <span class="brand-copy"><strong>INJIBARA</strong><small>UNIVERSITY</small></span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open navigation">
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            </button>
+            <nav class="primary-nav" id="primaryNav" aria-label="Main navigation">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#study">Study areas</a>
+                <a href="#faq">FAQs</a>
+                <a class="nav-cta" href="#inquiry">Get in touch <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="hero" id="home">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <span class="eyebrow"><span class="eyebrow-dot"></span> A community for curious minds</span>
+                    <h1>Learn with purpose.<br><span>Grow with community.</span></h1>
+                    <p class="hero-lead">Welcome to Injibara University. Explore learning opportunities, discover your interests, and take the next step toward your future.</p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#study">Explore study areas <i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a>
+                        <a class="button button-quiet" href="#about"><span class="play-icon"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span> Get to know us</a>
+                    </div>
+                    <div class="hero-note"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i><span>Use the interest form to ask about study options. Confirm official programs and admissions details with the university.</span></div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-image-wrap">
+                        <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="University campus building surrounded by greenery" fetchpriority="high">
+                    </div>
+                    <div class="image-caption"><span class="caption-icon"><i class="fa-solid fa-building-columns" aria-hidden="true"></i></span><span><strong>A place to begin your journey</strong><small>Explore, connect, and build your future</small></span></div>
+                    <span class="visual-decoration decoration-one" aria-hidden="true"></span>
+                    <span class="visual-decoration decoration-two" aria-hidden="true"></span>
+                </div>
+            </div>
+            <a class="scroll-cue" href="#about"><span>Scroll to discover</span><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a>
+        </section>
+
+        <section class="welcome-section section-space" id="about">
+            <div class="container welcome-grid">
+                <div class="section-intro">
+                    <span class="eyebrow eyebrow-dark">WELCOME TO INJIBARA</span>
+                    <h2>A place to turn<br><span>curiosity into possibility.</span></h2>
+                </div>
+                <div class="welcome-copy">
+                    <p>Every journey starts with a question. Find a subject that inspires you, connect with a learning community, and explore how education can make a difference in your life and the world around you.</p>
+                    <a class="text-link" href="#study">Find an area to explore <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div class="container values-grid">
+                <article class="value-card"><span class="value-number">01</span><span class="value-icon"><i class="fa-solid fa-book-open" aria-hidden="true"></i></span><h3>Keep learning</h3><p>Ask questions, explore new ideas, and keep building knowledge for the future.</p></article>
+                <article class="value-card"><span class="value-number">02</span><span class="value-icon"><i class="fa-solid fa-seedling" aria-hidden="true"></i></span><h3>Grow together</h3><p>Learning is a shared journey shaped by people, experiences, and community.</p></article>
+                <article class="value-card"><span class="value-number">03</span><span class="value-icon"><i class="fa-solid fa-handshake-angle" aria-hidden="true"></i></span><h3>Make a difference</h3><p>Bring your skills and curiosity to the challenges that matter to you.</p></article>
+            </div>
+        </section>
+
+        <section class="campus-section" aria-labelledby="campusTitle">
+            <div class="container">
+                <div class="campus-heading">
+                    <div>
+                        <span class="eyebrow eyebrow-dark">A LOOK AROUND CAMPUS</span>
+                        <h2 id="campusTitle">Learning happens<br><span>all around us.</span></h2>
+                    </div>
+                    <p>Discover the places and people that make a learning community. These illustrative photos show campus life and are not official Injibara University campus photographs.</p>
+                </div>
+                <div class="campus-gallery">
+                    <figure class="campus-photo campus-photo-main">
+                        <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="University students learning together in a classroom" loading="lazy">
+                        <figcaption><span>Learn together</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></figcaption>
+                    </figure>
+                    <figure class="campus-photo">
+                        <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Students sharing ideas and studying together" loading="lazy">
+                        <figcaption><span>Share ideas</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></figcaption>
+                    </figure>
+                    <figure class="campus-photo">
+                        <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="A university campus building among trees" loading="lazy">
+                        <figcaption><span>Find your place</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></figcaption>
+                    </figure>
+                </div>
+                <p class="photo-credit-note">Illustrative stock photos hosted by Unsplash. They do not represent verified Injibara University locations.</p>
+            </div>
+        </section>
+
+        <section class="study-section section-space" id="study">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow eyebrow-dark">START WITH AN INTEREST</span>
+                        <h2>What would you like<br><span>to explore?</span></h2>
+                    </div>
+                    <p>Browse example study areas and choose one to ask us about. This is an introductory guide, not an official course catalog.</p>
+                </div>
+                <div class="study-tools">
+                    <label class="study-search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="studySearch" type="search" placeholder="Search study areas..." aria-label="Search study areas"></label>
+                    <div class="filter-list" role="group" aria-label="Filter study areas">
+                        <button class="filter-button active" type="button" data-filter="all" aria-pressed="true">All areas</button>
+                        <button class="filter-button" type="button" data-filter="science" aria-pressed="false">Science &amp; technology</button>
+                        <button class="filter-button" type="button" data-filter="society" aria-pressed="false">People &amp; society</button>
+                        <button class="filter-button" type="button" data-filter="environment" aria-pressed="false">Environment</button>
+                    </div>
+                </div>
+                <div class="study-grid" id="studyGrid" aria-live="polite"></div>
+                <p class="empty-state" id="studyEmpty" hidden>No study areas match your search. Try another word.</p>
+                <p class="catalog-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Study-area examples are for exploration only. Program availability, entry requirements, and application dates must be confirmed through official university channels.</p>
+            </div>
+        </section>
+
+        <section class="pathway-section">
+            <div class="container pathway-grid">
+                <div class="pathway-copy">
+                    <span class="eyebrow">YOUR NEXT STEP</span>
+                    <h2>Questions are a<br>great place to begin.</h2>
+                    <p>Tell us what you are interested in. Save your inquiry on this device and use the details as a reminder when contacting the university.</p>
+                    <a class="button button-light" href="#inquiry">Send an inquiry <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+                <div class="pathway-art" aria-hidden="true">
+                    <div class="art-circle circle-back"></div>
+                    <div class="art-circle circle-front"><i class="fa-solid fa-book-open-reader"></i></div>
+                    <span class="art-star star-one">✳</span><span class="art-star star-two">✦</span>
+                    <span class="art-label">Curiosity<br>takes you places.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section section-space" id="faq">
+            <div class="container faq-grid">
+                <div class="faq-intro">
+                    <span class="eyebrow eyebrow-dark">GOOD TO KNOW</span>
+                    <h2>A few things<br><span>you might ask.</span></h2>
+                    <p>Need details about a particular program or application? Use the inquiry form, then confirm official information directly with the university.</p>
+                </div>
+                <div class="faq-list">
+                    <details>
+                        <summary>Are the study areas listed here official programs?<span class="faq-plus" aria-hidden="true"></span></summary>
+                        <p>No. They are example areas to help you explore your interests. Contact the university for its official program list and availability.</p>
+                    </details>
+                    <details>
+                        <summary>Does the inquiry form submit to the university?<span class="faq-plus" aria-hidden="true"></span></summary>
+                        <p>No. This demo saves the information only in your current browser. It does not send an email or transmit your details to the university.</p>
+                    </details>
+                    <details>
+                        <summary>How can I confirm admission requirements?<span class="faq-plus" aria-hidden="true"></span></summary>
+                        <p>Check Injibara University’s official information or contact its admissions office. Requirements and dates may change.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section class="inquiry-section section-space" id="inquiry">
+            <div class="container inquiry-grid">
+                <div class="inquiry-copy">
+                    <span class="eyebrow eyebrow-dark">LET'S START A CONVERSATION</span>
+                    <h2>Tell us what<br><span>you want to learn.</span></h2>
+                    <p>Share your contact details and an area of interest. Your inquiry will be saved locally so you can keep a record of it.</p>
+                    <div class="privacy-note"><i class="fa-solid fa-lock" aria-hidden="true"></i><span><strong>Your privacy matters.</strong><br>This demo saves your entry on this device only. It is not sent to Injibara University.</span></div>
+                </div>
+                <form class="inquiry-form" id="inquiryForm">
+                    <div class="form-heading"><span class="form-step">YOUR NEXT STEP</span><h3>Register your interest</h3><p>All starred fields are required.</p></div>
+                    <div class="form-grid">
+                        <label>Full name *<input name="name" autocomplete="name" maxlength="100" required placeholder="Your full name"></label>
+                        <label>Email address *<input name="email" type="email" autocomplete="email" maxlength="150" required placeholder="you@example.com"></label>
+                        <label>Phone number<input name="phone" type="tel" autocomplete="tel" maxlength="30" placeholder="Optional"></label>
+                        <label>Study level *
+                            <select name="level" required>
+                                <option value="">Choose a level</option>
+                                <option>Undergraduate</option>
+                                <option>Postgraduate</option>
+                                <option>Short course / other</option>
+                                <option>Not sure yet</option>
+                            </select>
+                        </label>
+                        <label class="form-wide">Area of interest *
+                            <select name="interest" id="interestSelect" required>
+                                <option value="">Choose an area</option>
+                            </select>
+                        </label>
+                        <label class="form-wide">What would you like to know?<textarea name="message" rows="4" maxlength="1000" placeholder="Tell us what information you are looking for (optional)"></textarea></label>
+                    </div>
+                    <button class="button button-submit" type="submit">Save my inquiry <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                    <p class="form-message" id="formMessage" role="status" aria-live="polite" hidden></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-main">
+            <a class="brand footer-brand" href="#home" aria-label="Injibara University home">
+                <span class="brand-mark" aria-hidden="true">IU</span><span class="brand-copy"><strong>INJIBARA</strong><small>UNIVERSITY</small></span>
+            </a>
+            <p>A place for learning, growth, and possibility.</p>
+            <a class="back-top" href="#home">Back to top <i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a>
+        </div>
+        <div class="container footer-bottom"><span>© <span id="currentYear"></span> Injibara University. Website demo.</span><span>Study-area examples are illustrative, not official program information.</span></div>
+    </footer>
+
+    <script src="javascript/school.js" defer></script>
 </body>
 </html>
