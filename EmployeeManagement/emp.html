@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="empCSS/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <main class="auth-screen" id="authScreen">
+        <section class="auth-card" aria-labelledby="authTitle">
+            <a class="auth-brand" href="#" aria-label="Employee Management">
+                <i class="fas fa-users"></i><span id="authOrganization">Employee Management</span>
+            </a>
+            <div class="auth-intro">
+                <p class="eyebrow">ADMIN ACCESS</p>
+                <h1 id="authTitle">Set up your admin account</h1>
+                <p id="authDescription">Create the first administrator account to continue to the workspace.</p>
+            </div>
+            <form id="setupForm" class="auth-form">
+                <label>Administrator name<input name="name" required maxlength="100" autocomplete="name" placeholder="Your name"></label>
+                <label>Administrator email<input name="email" type="email" required maxlength="150" autocomplete="email" placeholder="admin@company.com"></label>
+                <label>Password<input name="password" type="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></label>
+                <label>Confirm password<input name="confirmPassword" type="password" required minlength="8" autocomplete="new-password" placeholder="Enter your password again"></label>
+                <button class="button button-primary auth-submit" type="submit">Create admin account</button>
+            </form>
+            <form id="loginForm" class="auth-form" hidden>
+                <label>Administrator email<input name="email" type="email" required autocomplete="username" placeholder="admin@company.com"></label>
+                <label>Password<input name="password" type="password" required autocomplete="current-password" placeholder="Your password"></label>
+                <button class="button button-primary auth-submit" type="submit">Sign in to dashboard</button>
+            </form>
+            <p id="authNotice" class="auth-notice" role="status" aria-live="polite" hidden></p>
+            <p class="auth-disclaimer">Demo authentication for this browser only. It does not replace a secure server login.</p>
+        </section>
+    </main>
+    <div class="dashboard-container" id="dashboardApp" hidden>
+        <aside class="sidebar">
+            <a class="logo" href="#" data-view="dashboard">
+                <i class="fas fa-users"></i><span>EMP Manager</span>
+            </a>
+            <nav class="sidebar-nav" aria-label="Main navigation">
+                <a href="#dashboard" class="nav-item active" data-view="dashboard"><i class="fas fa-gauge-high"></i><span>Dashboard</span></a>
+                <a href="#employees" class="nav-item" data-view="employees"><i class="fas fa-user-friends"></i><span>Employees</span></a>
+                <a href="#attendance" class="nav-item" data-view="attendance"><i class="fas fa-calendar-check"></i><span>Attendance</span></a>
+                <a href="#payroll" class="nav-item" data-view="payroll"><i class="fas fa-money-bill-wave"></i><span>Payroll</span></a>
+                <a href="#reports" class="nav-item" data-view="reports"><i class="fas fa-chart-bar"></i><span>Reports</span></a>
+                <a href="#hr" class="nav-item" data-view="hr"><i class="fas fa-people-group"></i><span>HR</span></a>
+                <a href="#courses" class="nav-item" data-view="courses"><i class="fas fa-graduation-cap"></i><span>Courses</span></a>
+                <a href="#settings" class="nav-item" data-view="settings"><i class="fas fa-gear"></i><span>Settings</span></a>
+            </nav>
+            <p class="sidebar-note">Your data is saved in this browser.</p>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <div>
+                    <p class="eyebrow">EMPLOYEE MANAGEMENT</p>
+                    <h1 id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <label class="search-box" id="searchBox">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <input id="globalSearch" type="search" placeholder="Search this page..." aria-label="Search current page">
+                    </label>
+                    <div class="user-menu"><span class="user-avatar">A</span><span>Admin</span><button class="button button-secondary admin-shortcut" type="button" data-view="admin"><i class="fas fa-user-shield"></i><span>Admin</span></button><button class="button button-secondary logout-button" id="logoutButton" type="button"><i class="fas fa-right-from-bracket"></i><span>Sign out</span></button></div>
+                </div>
+            </header>
+            <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+
+            <section class="page-view" id="view-dashboard">
+                <div class="welcome-row">
+                    <div><h2>People overview</h2><p>Dashboard values refresh from records saved in this browser.</p></div>
+                    <div class="dashboard-actions"><button class="button button-secondary" type="button" id="refreshDashboard"><i class="fas fa-rotate"></i> Refresh data</button><button class="button button-primary" type="button" data-go="employees"><i class="fas fa-plus"></i> Add employee</button></div>
+                </div>
+                <div class="stats-cards">
+                    <article class="stat-card"><div class="stat-icon blue"><i class="fas fa-users"></i></div><div><h3 id="totalEmployees">0</h3><p>Total employees</p></div></article>
+                    <article class="stat-card"><div class="stat-icon green"><i class="fas fa-user-check"></i></div><div><h3 id="presentToday">0</h3><p>Present today</p></div></article>
+                    <article class="stat-card"><div class="stat-icon orange"><i class="fas fa-calendar-minus"></i></div><div><h3 id="onLeave">0</h3><p>On leave today</p></div></article>
+                    <article class="stat-card"><div class="stat-icon purple"><i class="fas fa-wallet"></i></div><div><h3 id="latestPayroll">—</h3><p>Latest payroll total</p></div></article>
+                </div>
+                <div class="charts-section">
+                    <article class="panel chart-container"><div class="panel-heading"><div><h2>Employees by department</h2><p>Current employee distribution</p></div></div><div class="chart-wrap"><canvas id="departmentChart" aria-label="Employees by department chart"></canvas><p class="empty-chart" id="departmentEmpty" hidden>No employee data yet. Add an employee to see this chart.</p></div></article>
+                    <article class="panel chart-container"><div class="panel-heading"><div><h2>Attendance trend</h2><p>Recorded attendance over the last 7 days</p></div></div><div class="chart-wrap"><canvas id="attendanceChart" aria-label="Attendance trend chart"></canvas><p class="empty-chart" id="attendanceEmpty" hidden>No attendance records yet.</p></div></article>
+                </div>
+                <article class="panel"><div class="panel-heading"><div><h2>Recent attendance</h2><p>Most recently recorded attendance</p></div><button class="button button-secondary" type="button" data-go="attendance">Manage attendance</button></div><div class="table-wrap"><table><thead><tr><th>Employee</th><th>Date</th><th>Status</th><th>Time</th></tr></thead><tbody id="recentAttendance"></tbody></table></div></article>
+            </section>
+
+            <section class="page-view" id="view-employees" hidden>
+                <div class="welcome-row"><div><h2>Employee directory</h2><p>Add and maintain employee profiles, departments, and salaries.</p></div><span class="record-count" id="employeeCount">0 employees</span></div>
+                <article class="panel form-panel">
+                    <div class="panel-heading"><div><h2 id="employeeFormTitle">Add employee</h2><p>Fields marked with * are required.</p></div></div>
+                    <form id="employeeForm">
+                        <input type="hidden" name="id">
+                        <div class="form-grid">
+                            <label>Full name *<input name="name" required maxlength="100" autocomplete="name" placeholder="e.g. Alex Morgan"></label>
+                            <label>Email address *<input name="email" type="email" required maxlength="150" autocomplete="email" placeholder="alex@company.com"></label>
+                            <label>Phone<input name="phone" type="tel" maxlength="30" autocomplete="tel" placeholder="+1 555 0100"></label>
+                            <label>Department *<input name="department" required maxlength="80" placeholder="e.g. Engineering"></label>
+                            <label>Job title *<input name="position" required maxlength="100" placeholder="e.g. Software Engineer"></label>
+                            <label>Hire date *<input name="hireDate" type="date" required></label>
+                            <label>Monthly salary *<input name="salary" type="number" min="0" step="0.01" required placeholder="0.00"></label>
+                        </div>
+                        <div class="form-actions"><button class="button button-primary" type="submit" id="employeeSubmit"><i class="fas fa-user-plus"></i> Save employee</button><button class="button button-secondary" type="button" data-reset="employeeForm" hidden>Cancel edit</button></div>
+                    </form>
+                </article>
+                <article class="panel"><div class="panel-heading"><div><h2>All employees</h2><p>Use edit or delete to manage an employee record.</p></div></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Department</th><th>Job title</th><th>Email</th><th>Monthly salary</th><th>Actions</th></tr></thead><tbody id="employeesTable"></tbody></table></div></article>
+            </section>
+
+            <section class="page-view" id="view-attendance" hidden>
+                <div class="welcome-row"><div><h2>Attendance register</h2><p>Record daily status and working hours for each employee.</p></div><span class="record-count" id="attendanceCount">0 records</span></div>
+                <article class="panel form-panel">
+                    <div class="panel-heading"><div><h2 id="attendanceFormTitle">Record attendance</h2><p>One attendance record per employee per date. Saving the same date updates it.</p></div></div>
+                    <form id="attendanceForm">
+                        <input type="hidden" name="id">
+                        <div class="form-grid">
+                            <label>Employee *<select name="employeeId" required><option value="">Select an employee</option></select></label>
+                            <label>Date *<input name="date" type="date" required></label>
+                            <label>Status *<select name="status" required><option value="Present">Present</option><option value="Absent">Absent</option><option value="On leave">On leave</option><option value="Late">Late</option></select></label>
+                            <label>Check-in<input name="checkIn" type="time"></label>
+                            <label>Check-out<input name="checkOut" type="time"></label>
+                        </div>
+                        <div class="form-actions"><button class="button button-primary" type="submit" id="attendanceSubmit"><i class="fas fa-check"></i> Save attendance</button><button class="button button-secondary" type="button" data-reset="attendanceForm" hidden>Cancel edit</button></div>
+                    </form>
+                </article>
+                <article class="panel"><div class="panel-heading"><div><h2>Attendance history</h2><p>Search this page to filter by employee, date, or status.</p></div></div><div class="table-wrap"><table><thead><tr><th>Employee</th><th>Date</th><th>Status</th><th>Check-in</th><th>Check-out</th><th>Actions</th></tr></thead><tbody id="attendanceTable"></tbody></table></div></article>
+            </section>
+
+            <section class="page-view" id="view-payroll" hidden>
+                <div class="welcome-row"><div><h2>Payroll</h2><p>Prepare and track employee pay, adjustments, and deductions.</p></div><span class="record-count" id="payrollCount">0 records</span></div>
+                <article class="panel form-panel">
+                    <div class="panel-heading"><div><h2 id="payrollFormTitle">Create payroll record</h2><p>Net pay is calculated as salary + overtime + bonus − deductions.</p></div></div>
+                    <form id="payrollForm">
+                        <input type="hidden" name="id">
+                        <div class="form-grid">
+                            <label>Employee *<select name="employeeId" required><option value="">Select an employee</option></select></label>
+                            <label>Pay period *<input name="period" type="month" required></label>
+                            <label>Base salary *<input name="baseSalary" type="number" min="0" step="0.01" required></label>
+                            <label>Overtime pay<input name="overtime" type="number" min="0" step="0.01" value="0"></label>
+                            <label>Bonus<input name="bonus" type="number" min="0" step="0.01" value="0"></label>
+                            <label>Deductions<input name="deductions" type="number" min="0" step="0.01" value="0"></label>
+                        </div>
+                        <div class="net-pay-preview">Net pay <strong id="netPayPreview">$0.00</strong></div>
+                        <div class="form-actions"><button class="button button-primary" type="submit" id="payrollSubmit"><i class="fas fa-calculator"></i> Save payroll</button><button class="button button-secondary" type="button" data-reset="payrollForm" hidden>Cancel edit</button></div>
+                    </form>
+                </article>
+                <article class="panel"><div class="panel-heading"><div><h2>Payroll history</h2><p>Amounts are displayed in USD. Configure your currency in the script if needed.</p></div></div><div class="table-wrap"><table><thead><tr><th>Employee</th><th>Period</th><th>Base</th><th>Overtime</th><th>Bonus</th><th>Deductions</th><th>Net pay</th><th>Actions</th></tr></thead><tbody id="payrollTable"></tbody></table></div></article>
+            </section>
+
+            <section class="page-view" id="view-reports" hidden>
+                <div class="welcome-row"><div><h2>Reports</h2><p>Filter saved records by date and export the results as CSV.</p></div></div>
+                <article class="panel form-panel">
+                    <div class="panel-heading"><div><h2>Build a report</h2><p>Choose a record type and optional date range.</p></div></div>
+                    <form id="reportForm">
+                        <div class="form-grid report-filter-grid">
+                            <label>Report type *<select name="type" required><option value="employees">Employees</option><option value="attendance">Attendance</option><option value="payroll">Payroll</option></select></label>
+                            <label>From date<input name="from" type="date"></label>
+                            <label>To date<input name="to" type="date"></label>
+                        </div>
+                        <div class="form-actions"><button class="button button-primary" type="submit"><i class="fas fa-filter"></i> Generate report</button><button class="button button-secondary" type="button" id="exportReport" disabled><i class="fas fa-download"></i> Export CSV</button></div>
+                    </form>
+                </article>
+                <div class="stats-cards report-stats">
+                    <article class="stat-card"><div class="stat-icon blue"><i class="fas fa-list"></i></div><div><h3 id="reportRecordCount">0</h3><p>Matching records</p></div></article>
+                    <article class="stat-card"><div class="stat-icon green"><i class="fas fa-coins"></i></div><div><h3 id="reportTotal">$0.00</h3><p id="reportTotalLabel">Total payroll</p></div></article>
+                </div>
+                <article class="panel"><div class="panel-heading"><div><h2 id="reportTitle">Report results</h2><p id="reportDescription">Generate a report to see matching records.</p></div></div><div class="table-wrap"><table><thead id="reportHead"></thead><tbody id="reportBody"></tbody></table></div></article>
+            </section>
+
+            <section class="page-view" id="view-admin" hidden>
+                <div class="welcome-row"><div><h2>Admin directory</h2><p>Maintain administrator contact and role records for this workspace.</p></div><span class="record-count" id="adminCount">0 administrators</span></div>
+                <div class="notice info-notice">This is an administrator directory only. The standalone app does not provide sign-in or enforce access permissions.</div>
+                <article class="panel form-panel">
+                    <div class="panel-heading"><div><h2 id="adminFormTitle">Add administrator</h2><p>Do not enter passwords here; this demo stores records in browser storage.</p></div></div>
+                    <form id="adminForm">
+                        <input type="hidden" name="id">
+                        <div class="form-grid">
+                            <label>Full name *<input name="name" required maxlength="100" placeholder="e.g. Alex Morgan"></label>
+                            <label>Email address *<input name="email" type="email" required maxlength="150" placeholder="alex@company.com"></label>
+                            <label>Role *<select name="role" required><option value="Administrator">Administrator</option><option value="HR Manager">HR Manager</option><option value="Payroll Manager">Payroll Manager</option><option value="Viewer">Viewer</option></select></label>
+                            <label>Account status *<select name="status" required><option value="Active">Active</option><option value="Inactive">Inactive</option></select></label>
+                        </div>
+                        <div class="form-actions"><button class="button button-primary" type="submit" id="adminSubmit"><i class="fas fa-user-plus"></i> Save administrator</button><button class="button button-secondary" type="button" data-reset="adminForm" hidden>Cancel edit</button></div>
+                    </form>
+                </article>
+                <article class="panel"><div class="panel-heading"><div><h2>Administrator records</h2><p>Search, edit, or remove directory entries.</p></div></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminTable"></tbody></table></div></article>
+            </section>
+
+            <section class="page-view" id="view-hr" hidden>
+                <div class="welcome-row"><div><h2>HR leave management</h2><p>Submit employee leave requests and track approval decisions.</p></div><span class="record-count" id="leaveCount">0 requests</span></div>
+                <article class="panel form-panel">
+                    <div class="panel-heading"><div><h2 id="leaveFormTitle">Create leave request</h2><p>Requests start as pending. HR can approve or decline them from the register.</p></div></div>
+                    <form id="leaveForm">
+                        <input type="hidden" name="id">
+                        <div class="form-grid">
+                            <label>Employee *<select name="employeeId" required><option value="">Select an employee</option></select></label>
+                            <label>Leave type *<select name="type" required><option value="Annual leave">Annual leave</option><option value="Sick leave">Sick leave</option><option value="Personal leave">Personal leave</option><option value="Unpaid leave">Unpaid leave</option></select></label>
+                            <label>Start date *<input name="startDate" type="date" required></label>
+                            <label>End date *<input name="endDate" type="date" required></label>
+                            <label class="wide-field">Reason<textarea name="reason" rows="2" maxlength="500" placeholder="Optional details for HR"></textarea></label>
+                        </div>
+                        <div class="form-actions"><button class="button button-primary" type="submit" id="leaveSubmit"><i class="fas fa-calendar-plus"></i> Save request</button><button class="button button-secondary" type="button" data-reset="leaveForm" hidden>Cancel edit</button></div>
+                    </form>
+                </article>
+                <article class="panel"><div class="panel-heading"><div><h2>Leave requests</h2><p>Approve or decline pending requests, or edit and remove records.</p></div></div><div class="table-wrap"><table><thead><tr><th>Employee</th><th>Leave type</th><th>Dates</th><th>Reason</th><th>Status</th><th>Actions</th></tr></thead><tbody id="leaveTable"></tbody></table></div></article>
+            </section>
+
+            <section class="page-view" id="view-courses" hidden>
+                <div class="welcome-row"><div><h2>Employee courses</h2><p>Assign training and track enrollment, completion, and learning costs.</p></div><span class="record-count" id="courseCount">0 courses</span></div>
+                <article class="panel form-panel">
+                    <div class="panel-heading"><div><h2 id="courseFormTitle">Assign a course</h2><p>Course assignments are linked to an employee record.</p></div></div>
+                    <form id="courseForm">
+                        <input type="hidden" name="id">
+                        <div class="form-grid">
+                            <label>Employee *<select name="employeeId" required><option value="">Select an employee</option></select></label>
+                            <label>Course title *<input name="title" required maxlength="120" placeholder="e.g. Workplace safety"></label>
+                            <label>Provider / instructor<input name="provider" maxlength="100" placeholder="e.g. Learning team"></label>
+                            <label>Start date *<input name="startDate" type="date" required></label>
+                            <label>Course cost<input name="cost" type="number" min="0" step="0.01" value="0"></label>
+                            <label>Status *<select name="status" required><option value="Enrolled">Enrolled</option><option value="In progress">In progress</option><option value="Completed">Completed</option><option value="Cancelled">Cancelled</option></select></label>
+                        </div>
+                        <div class="form-actions"><button class="button button-primary" type="submit" id="courseSubmit"><i class="fas fa-graduation-cap"></i> Save course</button><button class="button button-secondary" type="button" data-reset="courseForm" hidden>Cancel edit</button></div>
+                    </form>
+                </article>
+                <article class="panel"><div class="panel-heading"><div><h2>Course assignments</h2><p>Review and update employee training records.</p></div></div><div class="table-wrap"><table><thead><tr><th>Employee</th><th>Course</th><th>Provider</th><th>Start date</th><th>Cost</th><th>Status</th><th>Actions</th></tr></thead><tbody id="courseTable"></tbody></table></div></article>
+            </section>
+
+            <section class="page-view" id="view-settings" hidden>
+                <div class="welcome-row"><div><h2>Workspace settings</h2><p>Set the organization and admin profile shown in this browser.</p></div></div>
+                <article class="panel form-panel">
+                    <div class="panel-heading"><div><h2>Organization and profile</h2><p>These preferences are saved locally and used throughout the dashboard.</p></div></div>
+                    <form id="settingsForm">
+                        <div class="form-grid">
+                            <label>Organization name *<input name="organization" required maxlength="120" placeholder="Company name"></label>
+                            <label>Admin display name *<input name="adminName" required maxlength="100" placeholder="Your name"></label>
+                            <label>Admin email<input name="adminEmail" type="email" maxlength="150" placeholder="admin@company.com"></label>
+                            <label>Display currency *<select name="currency" required><option value="USD">USD — US Dollar</option><option value="EUR">EUR — Euro</option><option value="GBP">GBP — British Pound</option><option value="CAD">CAD — Canadian Dollar</option><option value="AUD">AUD — Australian Dollar</option><option value="INR">INR — Indian Rupee</option><option value="JPY">JPY — Japanese Yen</option></select></label>
+                        </div>
+                        <div class="form-actions"><button class="button button-primary" type="submit"><i class="fas fa-save"></i> Save settings</button></div>
+                    </form>
+                </article>
+                <article class="panel settings-help"><h2>About local storage</h2><p>Employee, payroll, attendance, HR, course, and admin-directory records are stored in this browser on this device. Admin sign-in is a local demo, not server authentication. Data is not shared across browsers or devices.</p></article>
+            </section>
+        </main>
+    </div>
+    <script src="empCSS/JS/emp.js?v=20261109-2055"></script>
+</body>
+</html>
