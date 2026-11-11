@@ -143,6 +143,118 @@ function handleInquirySubmit(event) {
     showFormMessage(`Inquiry ${inquiry.id} was saved on this device. It has not been sent to Injibara University.`);
 }
 
+function initializeHeroCarousel() {
+    const carousel = document.getElementById('heroCarousel');
+    if (!carousel) return;
+
+    const image = document.getElementById('heroSlideImage');
+    const title = document.getElementById('heroSlideTitle');
+    const description = document.getElementById('heroSlideDescription');
+    const toggleButton = carousel.querySelector('[data-carousel-toggle]');
+    const toggleIcon = toggleButton.querySelector('i');
+    const indicators = [...carousel.querySelectorAll('[data-carousel-slide]')];
+    const slides = [
+        {
+            image: 'https://www.inu.edu.et/wp-content/uploads/2026/05/photo_2026-05-17_19-49-05-1024x410.jpg',
+            alt: 'Injibara University international conference',
+            title: 'Injibara University',
+            description: 'Official university highlights'
+        },
+        {
+            image: 'https://www.inu.edu.et/wp-content/uploads/2026/01/1767340850645-768x512.jpg',
+            alt: 'Gardachew Worku, President of Injibara University',
+            title: 'University leadership',
+            description: 'President Gardachew Worku'
+        },
+        {
+            image: 'https://www.inu.edu.et/wp-content/uploads/2024/06/dr-amro-scaled-1-1024x548-1-300x161.jpg',
+            alt: 'Aemiro Tadesse, Academic Affairs Vice President',
+            title: 'Academic leadership',
+            description: 'Aemiro Tadesse'
+        },
+        {
+            image: 'https://www.inu.edu.et/wp-content/uploads/2024/06/ww-1024x682-1-300x200.jpg',
+            alt: 'Wohabe Birhan, Administrative and Development Vice President',
+            title: 'University leadership',
+            description: 'Wohabe Birhan'
+        }
+    ];
+    let activeSlide = 0;
+    let timer;
+    let isPaused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let isHovered = false;
+    let hasFocus = false;
+
+    function renderSlide(index) {
+        activeSlide = (index + slides.length) % slides.length;
+        const slide = slides[activeSlide];
+        image.src = slide.image;
+        image.alt = slide.alt;
+        title.textContent = slide.title;
+        description.textContent = slide.description;
+        indicators.forEach((indicator, indicatorIndex) => {
+            indicator.setAttribute('aria-current', String(indicatorIndex === activeSlide));
+        });
+    }
+
+    function updateToggle() {
+        const label = isPaused ? 'Start slideshow' : 'Pause slideshow';
+        toggleButton.setAttribute('aria-label', label);
+        toggleButton.setAttribute('title', label);
+        toggleButton.setAttribute('aria-pressed', String(isPaused));
+        toggleIcon.className = `fa-solid ${isPaused ? 'fa-play' : 'fa-pause'}`;
+    }
+
+    function updateTimer() {
+        window.clearInterval(timer);
+        if (!isPaused && !isHovered && !hasFocus) {
+            timer = window.setInterval(() => renderSlide(activeSlide + 1), 5000);
+        }
+    }
+
+    carousel.querySelector('[data-carousel-prev]').addEventListener('click', () => {
+        renderSlide(activeSlide - 1);
+        updateTimer();
+    });
+    carousel.querySelector('[data-carousel-next]').addEventListener('click', () => {
+        renderSlide(activeSlide + 1);
+        updateTimer();
+    });
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            renderSlide(index);
+            updateTimer();
+        });
+    });
+    toggleButton.addEventListener('click', () => {
+        isPaused = !isPaused;
+        if (!isPaused) hasFocus = false;
+        updateToggle();
+        updateTimer();
+    });
+    carousel.addEventListener('mouseenter', () => {
+        isHovered = true;
+        updateTimer();
+    });
+    carousel.addEventListener('mouseleave', () => {
+        isHovered = false;
+        updateTimer();
+    });
+    carousel.addEventListener('focusin', () => {
+        hasFocus = true;
+        updateTimer();
+    });
+    carousel.addEventListener('focusout', event => {
+        if (carousel.contains(event.relatedTarget)) return;
+        hasFocus = false;
+        updateTimer();
+    });
+
+    renderSlide(0);
+    updateToggle();
+    updateTimer();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menuToggle');
     const primaryNav = document.getElementById('primaryNav');
@@ -151,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inquiryForm = document.getElementById('inquiryForm');
     let activeFilter = 'all';
 
+    initializeHeroCarousel();
     document.getElementById('currentYear').textContent = String(new Date().getFullYear());
     interestSelect.insertAdjacentHTML('beforeend', studyAreas
         .map(area => `<option value="${escapeHtml(area.title)}">${escapeHtml(area.title)}</option>`)
