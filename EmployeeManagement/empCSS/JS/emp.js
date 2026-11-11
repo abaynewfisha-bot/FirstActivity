@@ -252,11 +252,11 @@ async function handleSetupSubmit(event) {
         localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(nextSettings));
         adminAccount = account;
         settings = nextSettings;
+        sessionStorage.setItem(ADMIN_SESSION_KEY, account.email);
         document.getElementById('authOrganization').textContent = settings.organization;
         form.reset();
-        setAuthView('login');
-        document.getElementById('loginForm').elements.email.value = account.email;
-        showAuthNotice('Admin account created. Sign in to open the dashboard.', false);
+        enterDashboard();
+        showNotice('Admin account created. Welcome to Employee Management.');
     } catch (error) {
         console.error('Unable to create the admin account.', error);
         showAuthNotice(error.message || 'Could not save the admin account. Check browser storage and try again.');
@@ -347,8 +347,8 @@ function fillEmployeeOptions() {
 }
 
 function renderWorkspaceProfile() {
-    document.querySelector('.eyebrow').textContent = settings.organization.toUpperCase();
-    document.querySelector('.user-menu > span:last-child').textContent = settings.adminName;
+    document.getElementById('workspaceOrgName').textContent = settings.organization.toUpperCase();
+    document.getElementById('adminNameDisplay').textContent = settings.adminName;
     document.querySelector('.user-avatar').textContent = settings.adminName.trim().charAt(0).toUpperCase() || 'A';
 }
 
